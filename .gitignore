@@ -19,3 +19,8 @@ docs/*
 
 #macos
 .DS_Store
+data/docs/db/docs.trace.db
+.gitignore
+data/docs/log/docs.log
+.gitignore
+data/docs/db/docs.mv.db
