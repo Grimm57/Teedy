@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Teedy Custom PMD Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+  <description>
+    Custom PMD ruleset with only the metrics from practice: LoC, CC, WMC, CBO, and LCOM-like cohesion.
+  </description>
+
+  <!-- LoC (Lines of Code): NCSS-based count -->
+  <rule ref="category/java/design.xml/NcssCount"/>
+
+  <!-- CC (Cyclomatic Complexity) -->
+  <rule ref="category/java/design.xml/CyclomaticComplexity"/>
+
+  <!-- CBO (Coupling Between Objects) -->
+  <rule ref="category/java/design.xml/CouplingBetweenObjects"/>
+
+  <!-- WMC + cohesion signal (PMD uses WMC and TCC; TCC is inverse to LCOM) -->
+  <rule ref="category/java/design.xml/GodClass"/>
+</ruleset>
