@@ -3,42 +3,42 @@ pipeline {
     stages {
         stage('Clean') {
             steps {
-                sh 'mvn clean'
+                bat 'mvn.cmd clean'
             }
         }
         stage('Compile') {
             steps {
-                sh 'mvn compile'
+                bat 'mvn.cmd compile'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test -Dmaven.test.failure.ignore=true'
+                bat 'mvn.cmd test -Dmaven.test.failure.ignore=true'
             }
         }
         stage('PMD') {
             steps {
-                sh 'mvn pmd:pmd'
+                bat 'mvn.cmd pmd:pmd'
             }
         }
         stage('JaCoCo') {
             steps {
-                sh 'mvn jacoco:report'
+                bat 'mvn.cmd jacoco:report'
             }
         }
         stage('Javadoc') {
             steps {
-                sh 'mvn javadoc:javadoc'
+                bat 'mvn.cmd javadoc:javadoc'
             }
         }
         stage('Site') {
             steps {
-                sh 'mvn site'
+                bat 'mvn.cmd site'
             }
         }
         stage('Package') {
             steps {
-                sh 'mvn package -DskipTests'
+                bat 'mvn.cmd package -DskipTests'
             }
         }
     }
