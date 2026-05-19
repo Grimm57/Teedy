@@ -2,52 +2,64 @@ FROM ubuntu:22.04
 LABEL maintainer="b.gamard@sismics.com"
 
 # Run Debian in non interactive mode
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Configure env
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
-ENV JAVA_OPTIONS -Dfile.encoding=UTF-8 -Xmx1g
-ENV JETTY_VERSION 11.0.20
-ENV JETTY_HOME /opt/jetty
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
+ENV JAVA_OPTIONS="-Dfile.encoding=UTF-8 -Xmx1g"
+ENV JETTY_VERSION=11.0.20
+ENV JETTY_HOME=/opt/jetty
 
 # Install packages
-RUN apt-get update && \
-    apt-get -y -q --no-install-recommends install \
-    vim less procps unzip wget tzdata openjdk-11-jdk \
-    ffmpeg \
-    mediainfo \
-    tesseract-ocr \
-    tesseract-ocr-ara \
-    tesseract-ocr-ces \
-    tesseract-ocr-chi-sim \
-    tesseract-ocr-chi-tra \
-    tesseract-ocr-dan \
-    tesseract-ocr-deu \
-    tesseract-ocr-fin \
-    tesseract-ocr-fra \
-    tesseract-ocr-heb \
-    tesseract-ocr-hin \
-    tesseract-ocr-hun \
-    tesseract-ocr-ita \
-    tesseract-ocr-jpn \
-    tesseract-ocr-kor \
-    tesseract-ocr-lav \
-    tesseract-ocr-nld \
-    tesseract-ocr-nor \
-    tesseract-ocr-pol \
-    tesseract-ocr-por \
-    tesseract-ocr-rus \
-    tesseract-ocr-spa \
-    tesseract-ocr-swe \
-    tesseract-ocr-tha \
-    tesseract-ocr-tur \
-    tesseract-ocr-ukr \
-    tesseract-ocr-vie \
-    tesseract-ocr-sqi \
-    && apt-get clean && \
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu|http://us.archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.ubuntu.com/ubuntu|http://us.archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list && \
+    apt-get update -o Acquire::Retries=5 && \
+    apt-get install -y -q \
+        -o Acquire::Retries=5 \
+        --no-install-recommends \
+        --fix-missing \
+        vim \
+        less \
+        procps \
+        unzip \
+        wget \
+        tzdata \
+        openjdk-11-jdk \
+        ffmpeg \
+        mediainfo \
+        tesseract-ocr \
+        tesseract-ocr-ara \
+        tesseract-ocr-ces \
+        tesseract-ocr-chi-sim \
+        tesseract-ocr-chi-tra \
+        tesseract-ocr-dan \
+        tesseract-ocr-deu \
+        tesseract-ocr-fin \
+        tesseract-ocr-fra \
+        tesseract-ocr-heb \
+        tesseract-ocr-hin \
+        tesseract-ocr-hun \
+        tesseract-ocr-ita \
+        tesseract-ocr-jpn \
+        tesseract-ocr-kor \
+        tesseract-ocr-lav \
+        tesseract-ocr-nld \
+        tesseract-ocr-nor \
+        tesseract-ocr-pol \
+        tesseract-ocr-por \
+        tesseract-ocr-rus \
+        tesseract-ocr-spa \
+        tesseract-ocr-swe \
+        tesseract-ocr-tha \
+        tesseract-ocr-tur \
+        tesseract-ocr-ukr \
+        tesseract-ocr-vie \
+        tesseract-ocr-sqi && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
 RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Install Jetty
