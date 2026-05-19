@@ -13,18 +13,22 @@ ENV JETTY_VERSION=11.0.20
 ENV JETTY_HOME=/opt/jetty
 
 # Install packages
-RUN sed -i 's|http://archive.ubuntu.com/ubuntu|http://us.archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list && \
-    sed -i 's|http://security.ubuntu.com/ubuntu|http://us.archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list && \
-    apt-get update -o Acquire::Retries=5 && \
+RUN printf '%s\n' \
+    'deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse' \
+    'deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse' \
+    'deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse' \
+    'deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse' \
+    > /etc/apt/sources.list && \
+    apt-get update -o Acquire::Retries=10 && \
     apt-get install -y -q \
-        -o Acquire::Retries=5 \
+        -o Acquire::Retries=10 \
         --no-install-recommends \
-        --fix-missing \
         vim \
         less \
         procps \
         unzip \
         wget \
+        ca-certificates \
         tzdata \
         openjdk-11-jdk \
         ffmpeg \
